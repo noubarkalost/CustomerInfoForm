@@ -1,0 +1,44 @@
+<form [formGroup]="customerInfo"  (ngSubmit)="onSubmit()">
+    <label for="firstName">First Name: </label>
+    <input  formControlName="firstName" > <br>
+
+    <label for="last-name">Last Name: </label>
+    <input  formControlName="lastName" > <br>
+
+    <label for="email"> Email: </label>
+    <input  formControlName="email" > <br>
+
+    <label for="password">Password</label>
+    <input 
+        formControlName="password"
+        id="password" 
+        type="password" 
+        class="form-control">
+        <div *ngIf="customerInfo.controls.password.touched && customerInfo.controls.password.invalid" class="alert alert-danger">
+            <div *ngIf="customerInfo.controls.password.errors?.required">Password is required.</div>
+        </div>
+
+
+<div class="form-group">
+    <label for="confirm_password">Confirm Password</label>
+    <input 
+        formControlName="confirm_password"
+        id="confirm_password" 
+        type="password" 
+        class="form-control">
+        <div *ngIf="customerInfo.controls.confirm_password.touched && customerInfo.controls.confirm_password.invalid" class="alert alert-danger">
+            <div *ngIf="customerInfo.controls.confirm_password.errors?.required">Password is required.</div>
+            <div *ngIf="customerInfo.controls.confirm_password.errors?.confirmedValidator">Password and Confirm Password must be match.</div>
+        </div>
+</div>
+    </form>
+
+    
+    
+    <p>Complete the form to enable button.</p>
+    <button type="submit" [disabled]="!customerInfo.valid">Submit</button>
+    <br>
+
+    <button class="btn-btn-primary btn1" (click)="addForm()">Add</button>
+    <button class="btn-btn-primary btn2" (click)="deleteForm()">Remove</button>
+   
