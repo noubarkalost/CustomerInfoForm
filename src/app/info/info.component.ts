@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormControl , FormArray, FormBuilder, Validators} from '@angular/forms';
-import { ConfirmedValidator } from './validator'
+import { Component } from '@angular/core';
+import {FormGroup, FormControl , FormArray, Validators} from '@angular/forms';
+
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
@@ -8,7 +8,6 @@ import { ConfirmedValidator } from './validator'
 })
 export class InfoComponent  {
 
-  control!: FormControl
   currentForm:number = 0
   num: number = 1
 
@@ -18,7 +17,7 @@ export class InfoComponent  {
     email: new FormControl('', Validators.email),
     password: new FormControl ('', [
       Validators.minLength(6), Validators.pattern("^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")
-  
+
    ]),
 
    confirmPassword: new FormControl ('', [
@@ -28,13 +27,12 @@ export class InfoComponent  {
   })])
 
 
-  
-  
+
+
   onSubmit() {
-    console.log ('hello world')
   }
-  constructor(private fb: FormBuilder) {}
-  
+  constructor() {}
+
 
   addForm() {
     const form =  new FormGroup ({
@@ -43,13 +41,13 @@ export class InfoComponent  {
       email: new FormControl('', Validators.email),
       password: new FormControl ('', [
         Validators.minLength(6), Validators.pattern("^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")]),
-     
+
 
         confirmPassword: new FormControl ('', [
           Validators.minLength(6), Validators.pattern("^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")
         ])
     })
-    
+
     this.num += 1
     if (this.arr.length < 10) {
       this.arr.push(form)
@@ -57,12 +55,12 @@ export class InfoComponent  {
   }
 
   deleteForm(i:number){
- 
-   
+
+
       this.currentForm = i
       if(i>0){
         this.arr.removeAt(i)
-      
+
     }
   }
   submit(){
@@ -73,9 +71,9 @@ export class InfoComponent  {
     const password = this.arr.controls[0]?.get('password')?.value
     const confirmPassword = this.arr.controls[0]?.get('confirmPassword')?.value
 
-  
+
     console.log( password , confirmPassword, this.arr.controls[0].get('firstName')?.value )
-    return password === confirmPassword 
+    return password === confirmPassword
     }
-    
+
 }

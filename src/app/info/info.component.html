@@ -1,34 +1,29 @@
 <div *ngFor="let control of arr.controls | slice : 0 : num; let i = index" >
-  
+
 <form [formGroup]="$any(control)"  (ngSubmit)="onSubmit()">
-    <label for="firstName">First Name: </label>
-    <input  control="$any(control).controls['firstName']" > <br>
+    <label>First Name: </label>
+    <input  [formControl]="$any(control).controls['firstName']" > <br>
 
-    <label for="last-name">Last Name: </label>
-    <input  control="$any(control).controls['lastName']" > <br>
+    <label>Last Name: </label>
+    <input  [formControl]="$any(control).controls['lastName']" > <br>
 
-    <label for="email"> Email: </label>
-    <input  control="$any(control).controls['email']" > <br>
+    <label> Email: </label>
+    <input  [formControl]="$any(control).controls['email']" > <br>
 
     <label >Password</label>
-    <input 
-    control="$any(control).controls['password']"
-        type="password" 
+    <input
+      [formControl]="$any(control).controls['password']"
+        type="password"
         class="form-control">
-      
 
-
-<div class="form-group">
     <label >Confirm Password</label>
-    <input 
-        control="$any(control).controls['confirmPassword']"
-        type="password" 
+    <input
+      [formControl]="$any(control).controls['confirmPassword']"
+        type="password"
         class="form-control">
-       
-</div>
-    </form>
 
-     <p>Complete the form to enable button.</p>
+
+    </form>
     <button type="submit" (click) ="checkPassword()">Submit</button>
     <br>
 
