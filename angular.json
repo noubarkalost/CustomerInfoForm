@@ -98,9 +98,20 @@
             ],
             "scripts": []
           }
+        },
+            "deploy": {
+              "builder": "angular-cli-ghpages:deploy",
+              "options": {
+                "baseHref": "https://AniCoding.github.io/CustomerInfoForm/",
+                "name": "CustomerInfo",
+                "email": "ani.webdevelopment@gmail.com"
+          
+          }
         }
       }
     }
   },
   "defaultProject": "CustomerInfo"
 }
+
+

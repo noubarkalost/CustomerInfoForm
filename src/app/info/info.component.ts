@@ -6,48 +6,76 @@ import { ConfirmedValidator } from './validator'
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.css']
 })
-export class InfoComponent implements OnInit {
+export class InfoComponent  {
 
-  customerInfo = new FormGroup ({
-    firstName: new FormControl('FirstName'),
-    lastName: new FormControl ('LastName'),
-    email: new FormControl("Email", Validators.email),
-    password: new FormControl ('Password', [
+  control!: FormControl
+  currentForm:number = 0
+  num: number = 1
+
+  arr = new FormArray ([new FormGroup ({
+    firstName: new FormControl(''),
+    lastName: new FormControl (''),
+    email: new FormControl('', Validators.email),
+    password: new FormControl ('', [
       Validators.minLength(6), Validators.pattern("^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")
   
-    ])
-  });
+   ]),
+
+   confirmPassword: new FormControl ('', [
+    Validators.minLength(6), Validators.pattern("^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")
+  ])
+
+  })])
+
+
   
   
   onSubmit() {
     console.log ('hello world')
   }
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {}
   
-    this.customerInfo = fb.group({
-      password: ['', [Validators.required]],
-      confirm_password: ['', [Validators.required]]
-    }, { 
-      validator: ConfirmedValidator('password', 'confirm_password')
-    })
-  }
-    
-  get f(){
-    return this.customerInfo.controls;
-  }
 
   addForm() {
-    console.log('to add')
+    const form =  new FormGroup ({
+      firstName: new FormControl(''),
+      lastName: new FormControl (''),
+      email: new FormControl('', Validators.email),
+      password: new FormControl ('', [
+        Validators.minLength(6), Validators.pattern("^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")]),
+     
+
+        confirmPassword: new FormControl ('', [
+          Validators.minLength(6), Validators.pattern("^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$")
+        ])
+    })
+    
+    this.num += 1
+    if (this.arr.length < 10) {
+      this.arr.push(form)
+    }
   }
 
-  deleteForm(){
-    console.log('to delete')
+  deleteForm(i:number){
+ 
+   
+      this.currentForm = i
+      if(i>0){
+        this.arr.removeAt(i)
+      
+    }
   }
   submit(){
-    console.log(this.customerInfo.value);
+    console.log(this.arr.controls[this.currentForm].value);
   }
 
-  ngOnInit(): void {
-  }
+  checkPassword () {
+    const password = this.arr.controls[0]?.get('password')?.value
+    const confirmPassword = this.arr.controls[0]?.get('confirmPassword')?.value
 
+  
+    console.log( password , confirmPassword, this.arr.controls[0].get('firstName')?.value )
+    return password === confirmPassword 
+    }
+    
 }
